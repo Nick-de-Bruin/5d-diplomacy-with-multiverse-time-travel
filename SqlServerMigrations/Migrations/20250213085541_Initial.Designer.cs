@@ -3,44 +3,54 @@ using System.Collections.Generic;
 using Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace _5dDiplomacyWithMultiverseTimeTravel.Migrations
+namespace SqlServerMigrations.Migrations
 {
     [DbContext(typeof(GameContext))]
-    partial class GameContextModelSnapshot : ModelSnapshot
+    [Migration("20250213085541_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "8.0.11");
+            modelBuilder
+                .HasAnnotation("ProductVersion", "8.0.11")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("Entities.Board", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ChildTimelines")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("MightAdvance")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("bit");
 
                     b.Property<int>("Phase")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.Property<int>("Timeline")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.Property<int>("WorldId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.Property<int>("Year")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -53,31 +63,33 @@ namespace _5dDiplomacyWithMultiverseTimeTravel.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("BoardId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.Property<int?>("Owner")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.ComplexProperty<Dictionary<string, object>>("Location", "Entities.Centre.Location#Location", b1 =>
                         {
                             b1.IsRequired();
 
                             b1.Property<int>("Phase")
-                                .HasColumnType("INTEGER");
+                                .HasColumnType("int");
 
                             b1.Property<string>("RegionId")
                                 .IsRequired()
                                 .HasMaxLength(5)
-                                .HasColumnType("TEXT");
+                                .HasColumnType("nvarchar(5)");
 
                             b1.Property<int>("Timeline")
-                                .HasColumnType("INTEGER");
+                                .HasColumnType("int");
 
                             b1.Property<int>("Year")
-                                .HasColumnType("INTEGER");
+                                .HasColumnType("int");
                         });
 
                     b.HasKey("Id");
@@ -91,21 +103,23 @@ namespace _5dDiplomacyWithMultiverseTimeTravel.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("HasStrictAdjacencies")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("bit");
 
                     b.Property<bool>("IsSandbox")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("bit");
 
                     b.Property<string>("Players")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PlayersSubmitted")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -116,39 +130,41 @@ namespace _5dDiplomacyWithMultiverseTimeTravel.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Discriminator")
                         .IsRequired()
                         .HasMaxLength(8)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(8)");
 
                     b.Property<int>("Status")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.Property<int>("UnitId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.Property<int>("WorldId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.ComplexProperty<Dictionary<string, object>>("Location", "Entities.Order.Location#Location", b1 =>
                         {
                             b1.IsRequired();
 
                             b1.Property<int>("Phase")
-                                .HasColumnType("INTEGER");
+                                .HasColumnType("int");
 
                             b1.Property<string>("RegionId")
                                 .IsRequired()
                                 .HasMaxLength(5)
-                                .HasColumnType("TEXT");
+                                .HasColumnType("nvarchar(5)");
 
                             b1.Property<int>("Timeline")
-                                .HasColumnType("INTEGER");
+                                .HasColumnType("int");
 
                             b1.Property<int>("Year")
-                                .HasColumnType("INTEGER");
+                                .HasColumnType("int");
                         });
 
                     b.HasKey("Id");
@@ -168,37 +184,39 @@ namespace _5dDiplomacyWithMultiverseTimeTravel.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("BoardId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.Property<bool>("MustRetreat")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("bit");
 
                     b.Property<int>("Owner")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.Property<int>("Type")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.ComplexProperty<Dictionary<string, object>>("Location", "Entities.Unit.Location#Location", b1 =>
                         {
                             b1.IsRequired();
 
                             b1.Property<int>("Phase")
-                                .HasColumnType("INTEGER");
+                                .HasColumnType("int");
 
                             b1.Property<string>("RegionId")
                                 .IsRequired()
                                 .HasMaxLength(5)
-                                .HasColumnType("TEXT");
+                                .HasColumnType("nvarchar(5)");
 
                             b1.Property<int>("Timeline")
-                                .HasColumnType("INTEGER");
+                                .HasColumnType("int");
 
                             b1.Property<int>("Year")
-                                .HasColumnType("INTEGER");
+                                .HasColumnType("int");
                         });
 
                     b.HasKey("Id");
@@ -212,16 +230,18 @@ namespace _5dDiplomacyWithMultiverseTimeTravel.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("GameId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.Property<int>("Iteration")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.Property<int?>("Winner")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -248,21 +268,21 @@ namespace _5dDiplomacyWithMultiverseTimeTravel.Migrations
 
                             b1.Property<int>("Phase")
                                 .ValueGeneratedOnUpdateSometimes()
-                                .HasColumnType("INTEGER");
+                                .HasColumnType("int");
 
                             b1.Property<string>("RegionId")
                                 .IsRequired()
                                 .ValueGeneratedOnUpdateSometimes()
                                 .HasMaxLength(5)
-                                .HasColumnType("TEXT");
+                                .HasColumnType("nvarchar(5)");
 
                             b1.Property<int>("Timeline")
                                 .ValueGeneratedOnUpdateSometimes()
-                                .HasColumnType("INTEGER");
+                                .HasColumnType("int");
 
                             b1.Property<int>("Year")
                                 .ValueGeneratedOnUpdateSometimes()
-                                .HasColumnType("INTEGER");
+                                .HasColumnType("int");
                         });
 
                     b.ComplexProperty<Dictionary<string, object>>("Midpoint", "Entities.Convoy.Midpoint#Location", b1 =>
@@ -271,21 +291,21 @@ namespace _5dDiplomacyWithMultiverseTimeTravel.Migrations
 
                             b1.Property<int>("Phase")
                                 .ValueGeneratedOnUpdateSometimes()
-                                .HasColumnType("INTEGER");
+                                .HasColumnType("int");
 
                             b1.Property<string>("RegionId")
                                 .IsRequired()
                                 .ValueGeneratedOnUpdateSometimes()
                                 .HasMaxLength(5)
-                                .HasColumnType("TEXT");
+                                .HasColumnType("nvarchar(5)");
 
                             b1.Property<int>("Timeline")
                                 .ValueGeneratedOnUpdateSometimes()
-                                .HasColumnType("INTEGER");
+                                .HasColumnType("int");
 
                             b1.Property<int>("Year")
                                 .ValueGeneratedOnUpdateSometimes()
-                                .HasColumnType("INTEGER");
+                                .HasColumnType("int");
                         });
 
                     b.HasDiscriminator().HasValue("Convoy");
@@ -315,21 +335,21 @@ namespace _5dDiplomacyWithMultiverseTimeTravel.Migrations
 
                             b1.Property<int>("Phase")
                                 .ValueGeneratedOnUpdateSometimes()
-                                .HasColumnType("INTEGER");
+                                .HasColumnType("int");
 
                             b1.Property<string>("RegionId")
                                 .IsRequired()
                                 .ValueGeneratedOnUpdateSometimes()
                                 .HasMaxLength(5)
-                                .HasColumnType("TEXT");
+                                .HasColumnType("nvarchar(5)");
 
                             b1.Property<int>("Timeline")
                                 .ValueGeneratedOnUpdateSometimes()
-                                .HasColumnType("INTEGER");
+                                .HasColumnType("int");
 
                             b1.Property<int>("Year")
                                 .ValueGeneratedOnUpdateSometimes()
-                                .HasColumnType("INTEGER");
+                                .HasColumnType("int");
                         });
 
                     b.HasDiscriminator().HasValue("Move");
@@ -345,21 +365,21 @@ namespace _5dDiplomacyWithMultiverseTimeTravel.Migrations
 
                             b1.Property<int>("Phase")
                                 .ValueGeneratedOnUpdateSometimes()
-                                .HasColumnType("INTEGER");
+                                .HasColumnType("int");
 
                             b1.Property<string>("RegionId")
                                 .IsRequired()
                                 .ValueGeneratedOnUpdateSometimes()
                                 .HasMaxLength(5)
-                                .HasColumnType("TEXT");
+                                .HasColumnType("nvarchar(5)");
 
                             b1.Property<int>("Timeline")
                                 .ValueGeneratedOnUpdateSometimes()
-                                .HasColumnType("INTEGER");
+                                .HasColumnType("int");
 
                             b1.Property<int>("Year")
                                 .ValueGeneratedOnUpdateSometimes()
-                                .HasColumnType("INTEGER");
+                                .HasColumnType("int");
                         });
 
                     b.ComplexProperty<Dictionary<string, object>>("Midpoint", "Entities.Support.Midpoint#Location", b1 =>
@@ -368,21 +388,21 @@ namespace _5dDiplomacyWithMultiverseTimeTravel.Migrations
 
                             b1.Property<int>("Phase")
                                 .ValueGeneratedOnUpdateSometimes()
-                                .HasColumnType("INTEGER");
+                                .HasColumnType("int");
 
                             b1.Property<string>("RegionId")
                                 .IsRequired()
                                 .ValueGeneratedOnUpdateSometimes()
                                 .HasMaxLength(5)
-                                .HasColumnType("TEXT");
+                                .HasColumnType("nvarchar(5)");
 
                             b1.Property<int>("Timeline")
                                 .ValueGeneratedOnUpdateSometimes()
-                                .HasColumnType("INTEGER");
+                                .HasColumnType("int");
 
                             b1.Property<int>("Year")
                                 .ValueGeneratedOnUpdateSometimes()
-                                .HasColumnType("INTEGER");
+                                .HasColumnType("int");
                         });
 
                     b.HasDiscriminator().HasValue("Support");

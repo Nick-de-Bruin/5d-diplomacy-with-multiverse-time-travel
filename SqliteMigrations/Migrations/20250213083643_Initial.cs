@@ -2,10 +2,10 @@
 
 #nullable disable
 
-namespace _5dDiplomacyWithMultiverseTimeTravel.Migrations
+namespace SqliteMigrations.Migrations
 {
     /// <inheritdoc />
-    public partial class SQLite : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
